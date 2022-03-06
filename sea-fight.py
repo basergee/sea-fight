@@ -10,6 +10,11 @@ class Player:
     def is_looser(self) -> bool:
         return False
 
+    # Возвращает список строк, представляющий собой поле игрока
+    @property
+    def board(self):
+        pass
+
 
 class HumanPlayer(Player):
     def __init__(self):
@@ -19,6 +24,11 @@ class HumanPlayer(Player):
     def move(self):
         print("Ходит человек")
 
+    # Возвращает список строк, представляющий собой поле игрока
+    @property
+    def board(self):
+        return [['o' for i in range(6)] for j in range(6)]
+
 
 class AiPlayer(Player):
     def __init__(self):
@@ -27,6 +37,11 @@ class AiPlayer(Player):
 
     def move(self):
         print("Ходит компьютер")
+
+    # Возвращает список строк, представляющий собой поле игрока
+    @property
+    def board(self):
+        return [['X' for i in range(6)] for j in range(6)]
 
 
 class SeaFight:
