@@ -60,13 +60,38 @@ class SeaFight:
         print("|                                                            |")
         print("+------------------------------------------------------------+")
 
+    def print_boards(self, player1, player2):
+        # Напечатать первой строкой ось координат, разделяя цифры
+        # символами " | "
+        print()
+        print("  | ", end="")
+        print(" | ".join(map(str, range(1, 7))))
+        # К каждой строке клеток добавить первым символом цифру оси
+        # координат
+        for i in range(1, 7):
+            print(str(i) + " | ", end="")
+            print(" | ".join(list(map(str, player1[i - 1]))))
+        print()
+
+        # Напечатать первой строкой ось координат, разделяя цифры
+        # символами " | "
+        print()
+        print("  | ", end="")
+        print(" | ".join(map(str, range(1, 7))))
+        # К каждой строке клеток добавить первым символом цифру оси
+        # координат
+        for i in range(1, 7):
+            print(str(i) + " | ", end="")
+            print(" | ".join(list(map(str, player2[i - 1]))))
+        print()
+
     def play(self):
         human = HumanPlayer()
         ai = AiPlayer()
         player = human
         # while True:
         for i in range(10):
-            # print_board()
+            self.print_boards(human.board, ai.board)
             player.move()
             if player.is_looser():
                 break
