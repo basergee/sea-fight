@@ -12,11 +12,19 @@ class Player:
 
 
 class HumanPlayer(Player):
+    def __init__(self):
+        # Запросить ввод расположения кораблей с клавиатуры
+        pass
+
     def move(self):
         print("Ходит человек")
 
 
 class AiPlayer(Player):
+    def __init__(self):
+        # Сгенерировать положение кораблей случайным образом
+        pass
+
     def move(self):
         print("Ходит компьютер")
 
