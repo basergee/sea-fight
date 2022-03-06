@@ -61,7 +61,24 @@ class HumanPlayer(Player):
         super().__init__()
 
     def make_move(self):
-        print("Ходит человек")
+        while True:
+            row = int(input("Введите номер строки: "))
+            if 1 <= row <= 6:
+                break
+            else:
+                print("За пределами игрового поля")
+                print("Повторите ввод")
+
+        while True:
+            col = int(input("Введите номер столбца: "))
+            if 1 <= col <= 6:
+                break
+            else:
+                print("За пределами игрового поля")
+                print("Повторите ввод")
+
+        print("Введено ", row, col)
+        return row, col
 
 
 class AiPlayer(Player):
