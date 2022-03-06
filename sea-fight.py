@@ -3,6 +3,13 @@
 # Классы импортирую сюда. И здесь соберу все вместе
 
 class Player:
+    _own_board = []
+    _enemy_board = []
+
+    def __init__(self):
+        self._own_board = [['o' for i in range(6)] for j in range(6)]
+        self._enemy_board = [['o' for i in range(6)] for j in range(6)]
+
     def move(self):
         pass
 
@@ -15,11 +22,36 @@ class Player:
     def board(self):
         pass
 
+    def print_boards(self):
+        # Делаем отступ от любого предыдущего вывода
+        print()
+        print("\t\tИгрок \t\t\t\t\t\t\tКомпьютер")
+        print()
+
+        # Выводим горизонтальную ось координат на две доски
+        print(
+            "  | " + " | ".join(map(str, range(1, 7)))
+            + "\t\t"
+            + "  | " + " | ".join(map(str, range(1, 7)))
+        )
+
+        # К каждой строке клеток добавляем первым символом цифру оси
+        # координат
+        for i in range(1, 7):
+            print(
+                str(i) + " | "
+                + " | ".join(list(map(str, self._own_board[i - 1])))
+                + "\t\t"
+                + str(i) + " | "
+                + " | ".join(list(map(str, self._enemy_board[i - 1])))
+            )
+        print()
+
 
 class HumanPlayer(Player):
     def __init__(self):
         # Запросить ввод расположения кораблей с клавиатуры
-        pass
+        super().__init__()
 
     def move(self):
         print("Ходит человек")
@@ -33,7 +65,9 @@ class HumanPlayer(Player):
 class AiPlayer(Player):
     def __init__(self):
         # Сгенерировать положение кораблей случайным образом
-        pass
+        super().__init__()
+        self._own_board = [['o' for i in range(6)] for j in range(6)]
+        self._enemy_board = [['x' for i in range(6)] for j in range(6)]
 
     def move(self):
         print("Ходит компьютер")
@@ -60,38 +94,13 @@ class SeaFight:
         print("|                                                            |")
         print("+------------------------------------------------------------+")
 
-    def print_boards(self, player1, player2):
-        # Делаем отступ от любого предыдущего вывода
-        print()
-        print("\t\tИгрок \t\t\t\t\t\t\tКомпьютер")
-        print()
-
-        # Выводим горизонтальную ось координат на две доски
-        print(
-            "  | " + " | ".join(map(str, range(1, 7)))
-            + "\t\t"
-            + "  | " + " | ".join(map(str, range(1, 7)))
-        )
-
-        # К каждой строке клеток добавляем первым символом цифру оси
-        # координат
-        for i in range(1, 7):
-            print(
-                str(i) + " | "
-                + " | ".join(list(map(str, player1[i - 1])))
-                + "\t\t"
-                + str(i) + " | "
-                + " | ".join(list(map(str, player2[i - 1])))
-            )
-        print()
-
     def play(self):
         human = HumanPlayer()
         ai = AiPlayer()
         player = human
         # while True:
         for i in range(10):
-            self.print_boards(human.board, ai.board)
+            player.print_boards()
             player.move()
             if player.is_looser():
                 break
