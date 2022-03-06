@@ -63,8 +63,16 @@ class HumanPlayer(Player):
     def make_move(self):
         print("Ходит игрок")
 
+        row = None  # Номер строки
+        col = None  # Номер столбца
+
         while True:
-            row = int(input("Введите номер строки: "))
+            try:
+                row = int(input("Введите номер строки: "))
+            except ValueError:
+                print("Введите ЧИСЛО!")
+                continue
+
             if 1 <= row <= 6:
                 break
             else:
@@ -72,7 +80,12 @@ class HumanPlayer(Player):
                 print("Повторите ввод")
 
         while True:
-            col = int(input("Введите номер столбца: "))
+            try:
+                col = int(input("Введите номер столбца: "))
+            except ValueError:
+                print("Введите ЧИСЛО!")
+                continue
+
             if 1 <= col <= 6:
                 break
             else:
