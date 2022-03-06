@@ -28,6 +28,10 @@ class Player:
     def make_move(self):
         pass
 
+    # Проверяет сделанный ход. Возвращает статус: мимо, ранил, убил
+    def check_move(self, coord):
+        pass
+
     # Возвращает True, когда все корабли игрока уничтожены
     def is_looser(self) -> bool:
         return False
@@ -108,6 +112,9 @@ class HumanPlayer(Player):
         print("Введено ", row, col)
         return row, col
 
+    def check_move(self, coord):
+        return MISSED
+
 
 class AiPlayer(Player):
     def __init__(self):
@@ -118,6 +125,9 @@ class AiPlayer(Player):
 
     def make_move(self):
         print("Ходит компьютер")
+
+    def check_move(self, coord):
+        return KILLED
 
 
 class SeaFight:
