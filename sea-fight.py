@@ -115,6 +115,10 @@ class HumanPlayer(Player):
     def check_move(self, coord):
         return MISSED
 
+    # Возвращает True, когда все корабли игрока уничтожены
+    def is_looser(self) -> bool:
+        return False
+
 
 class AiPlayer(Player):
     def __init__(self):
@@ -132,6 +136,10 @@ class AiPlayer(Player):
 
     def check_move(self, coord):
         return KILLED
+
+    # Возвращает True, когда все корабли игрока уничтожены
+    def is_looser(self) -> bool:
+        return True
 
 
 class SeaFight:
