@@ -125,6 +125,10 @@ class AiPlayer(Player):
 
     def make_move(self):
         print("Ходит компьютер")
+        row = 2
+        col = 3
+        print("Введено ", row, col)
+        return row, col
 
     def check_move(self, coord):
         return KILLED
