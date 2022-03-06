@@ -63,6 +63,8 @@ class SeaFight:
     def print_boards(self, player1, player2):
         # Делаем отступ от любого предыдущего вывода
         print()
+        print("\t\tИгрок \t\t\t\t\t\t\tКомпьютер")
+        print()
 
         # Выводим горизонтальную ось координат на две доски
         print(
