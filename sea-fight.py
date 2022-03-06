@@ -10,7 +10,9 @@ class Player:
         self._own_board = [['o' for i in range(6)] for j in range(6)]
         self._enemy_board = [['o' for i in range(6)] for j in range(6)]
 
-    def move(self):
+    # Ход игрока. Метод возвращает координаты клетки, в которую игрок
+    # делает выстрел (ход)
+    def make_move(self):
         pass
 
     # Возвращает True, когда все корабли игрока уничтожены
@@ -58,7 +60,7 @@ class HumanPlayer(Player):
         # Запросить ввод расположения кораблей с клавиатуры
         super().__init__()
 
-    def move(self):
+    def make_move(self):
         print("Ходит человек")
 
 
@@ -69,7 +71,7 @@ class AiPlayer(Player):
         self._own_board = [['o' for i in range(6)] for j in range(6)]
         self._enemy_board = [['x' for i in range(6)] for j in range(6)]
 
-    def move(self):
+    def make_move(self):
         print("Ходит компьютер")
 
 
@@ -96,7 +98,7 @@ class SeaFight:
         # while True:
         for i in range(10):
             player.print_boards()
-            player.move()
+            player.make_move()
             if player.is_looser():
                 break
             player = human if player == ai else ai
