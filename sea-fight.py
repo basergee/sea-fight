@@ -161,14 +161,30 @@ class SeaFight:
     def play(self):
         human = HumanPlayer()
         ai = AiPlayer()
-        player = human
+        player1 = human
+        player2 = ai
         # while True:
         for i in range(10):
-            player.print_boards()
-            player.make_move()
-            if player.is_looser():
-                break
-            player = human if player == ai else ai
+            human.print_boards()
+            result = player2.check_move(player1.make_move())
+            if result == INJURED:
+                print("Ранил")
+                continue
+            elif result == KILLED:
+                print("Убил")
+                if player2.is_looser():
+                    if player2 == human:
+                        print("Победил компьютер!")
+                    elif player2 == ai:
+                        print("Победил игрок!")
+
+                    print("Игровое поле победителя:")
+                    player1.print_boards()
+                    break
+            elif result == MISSED:
+                print("Мимо")
+                # Ход переходит другому игроку
+                player1, player2 = player2, player1
 
 
 if __name__ == "__main__":
