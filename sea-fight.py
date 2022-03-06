@@ -19,8 +19,13 @@ class Player:
 
     # Возвращает список строк, представляющий собой поле игрока
     @property
-    def board(self):
-        pass
+    def own_board(self):
+        return self._own_board
+
+    # Возвращает список строк, представляющий собой поле соперника
+    @property
+    def enemy_board(self):
+        return self._enemy_board
 
     def print_boards(self):
         # Делаем отступ от любого предыдущего вывода
@@ -40,10 +45,10 @@ class Player:
         for i in range(1, 7):
             print(
                 str(i) + " | "
-                + " | ".join(list(map(str, self._own_board[i - 1])))
+                + " | ".join(list(map(str, self.own_board[i - 1])))
                 + "\t\t"
                 + str(i) + " | "
-                + " | ".join(list(map(str, self._enemy_board[i - 1])))
+                + " | ".join(list(map(str, self.enemy_board[i - 1])))
             )
         print()
 
@@ -56,11 +61,6 @@ class HumanPlayer(Player):
     def move(self):
         print("Ходит человек")
 
-    # Возвращает список строк, представляющий собой поле игрока
-    @property
-    def board(self):
-        return [['o' for i in range(6)] for j in range(6)]
-
 
 class AiPlayer(Player):
     def __init__(self):
@@ -71,11 +71,6 @@ class AiPlayer(Player):
 
     def move(self):
         print("Ходит компьютер")
-
-    # Возвращает список строк, представляющий собой поле игрока
-    @property
-    def board(self):
-        return [['X' for i in range(6)] for j in range(6)]
 
 
 class SeaFight:
