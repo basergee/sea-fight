@@ -61,28 +61,26 @@ class SeaFight:
         print("+------------------------------------------------------------+")
 
     def print_boards(self, player1, player2):
-        # Напечатать первой строкой ось координат, разделяя цифры
-        # символами " | "
-        print()
-        print("  | ", end="")
-        print(" | ".join(map(str, range(1, 7))))
-        # К каждой строке клеток добавить первым символом цифру оси
-        # координат
-        for i in range(1, 7):
-            print(str(i) + " | ", end="")
-            print(" | ".join(list(map(str, player1[i - 1]))))
+        # Делаем отступ от любого предыдущего вывода
         print()
 
-        # Напечатать первой строкой ось координат, разделяя цифры
-        # символами " | "
-        print()
-        print("  | ", end="")
-        print(" | ".join(map(str, range(1, 7))))
-        # К каждой строке клеток добавить первым символом цифру оси
+        # Выводим горизонтальную ось координат на две доски
+        print(
+            "  | " + " | ".join(map(str, range(1, 7)))
+            + "\t\t"
+            + "  | " + " | ".join(map(str, range(1, 7)))
+        )
+
+        # К каждой строке клеток добавляем первым символом цифру оси
         # координат
         for i in range(1, 7):
-            print(str(i) + " | ", end="")
-            print(" | ".join(list(map(str, player2[i - 1]))))
+            print(
+                str(i) + " | "
+                + " | ".join(list(map(str, player1[i - 1])))
+                + "\t\t"
+                + str(i) + " | "
+                + " | ".join(list(map(str, player2[i - 1])))
+            )
         print()
 
     def play(self):
