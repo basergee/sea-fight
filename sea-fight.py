@@ -61,6 +61,8 @@ class HumanPlayer(Player):
         super().__init__()
 
     def make_move(self):
+        print("Ходит игрок")
+
         while True:
             row = int(input("Введите номер строки: "))
             if 1 <= row <= 6:
