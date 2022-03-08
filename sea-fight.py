@@ -15,6 +15,10 @@ INJURED = MoveResult()  # "Ранил"
 KILLED = MoveResult()   # "Убил"
 
 
+class WrongMoveError(Exception):
+    pass
+
+
 class Player:
     _own_board = []
     _enemy_board = []
@@ -73,6 +77,8 @@ class Player:
 
 
 class HumanPlayer(Player):
+    _moves = []
+
     def __init__(self):
         # Запросить ввод расположения кораблей с клавиатуры
         super().__init__()
@@ -110,7 +116,11 @@ class HumanPlayer(Player):
                 print("Повторите ввод")
 
         print("Введено ", row, col)
-        return row, col
+        if (row, col) not in self._moves:
+            self._moves.append((row, col))
+            return row, col
+        else:
+            raise WrongMoveError("Вы уже стреляли в эту клетку!")
 
     def check_move(self, coord):
         return MISSED
