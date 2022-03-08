@@ -149,7 +149,7 @@ class AiPlayer(Player):
 
     # Возвращает True, когда все корабли игрока уничтожены
     def is_looser(self) -> bool:
-        return True
+        return False
 
 
 class SeaFight:
