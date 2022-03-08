@@ -199,6 +199,7 @@ class SeaFight:
             human.print_boards()
             result = player2.check_move(player1.make_move())
             player1.update_boards(result)
+            print("Ответ противника: ", end="")
             if result == INJURED:
                 print("Ранил")
                 continue
