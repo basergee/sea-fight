@@ -57,8 +57,6 @@ class Player:
     def print_boards(self):
         # Делаем отступ от любого предыдущего вывода
         print()
-        print("\t\tИгрок \t\t\t\t\t\t\tКомпьютер")
-        print()
 
         # Выводим горизонтальную ось координат на две доски
         print(
@@ -140,6 +138,12 @@ class HumanPlayer(Player):
     def is_looser(self) -> bool:
         return False
 
+    def print_boards(self):
+        # Делаем отступ от любого предыдущего вывода
+        print()
+        print("\tИгрок (человек) \t\t\t\t\tПротивник")
+        super().print_boards()
+
 
 class AiPlayer(Player):
     def __init__(self):
@@ -161,6 +165,12 @@ class AiPlayer(Player):
     # Возвращает True, когда все корабли игрока уничтожены
     def is_looser(self) -> bool:
         return False
+
+    def print_boards(self):
+        # Делаем отступ от любого предыдущего вывода
+        print()
+        print("\tИгрок (компьютер) \t\t\t\t\tПротивник")
+        super().print_boards()
 
 
 class SeaFight:
