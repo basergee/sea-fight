@@ -36,6 +36,10 @@ class Player:
     def check_move(self, coord):
         pass
 
+    # Обновляет игровые поля в соответствии с результатом хода
+    def update_boards(self, move_result: MoveResult):
+        pass
+
     # Возвращает True, когда все корабли игрока уничтожены
     def is_looser(self) -> bool:
         return False
@@ -125,6 +129,13 @@ class HumanPlayer(Player):
     def check_move(self, coord):
         return MISSED
 
+    # Обновляет игровые поля в соответствии с результатом хода
+    def update_boards(self, move_result: MoveResult):
+        if move_result == MISSED:
+            self._enemy_board[(self._moves[-1])[0]-1][(self._moves[-1])[1]-1] = 'T'
+        elif move_result == INJURED or move_result == KILLED:
+            self._enemy_board[(self._moves[-1])[0]-1][(self._moves[-1])[1]-1] = 'X'
+
     # Возвращает True, когда все корабли игрока уничтожены
     def is_looser(self) -> bool:
         return False
@@ -177,6 +188,7 @@ class SeaFight:
         for i in range(10):
             human.print_boards()
             result = player2.check_move(player1.make_move())
+            player1.update_boards(result)
             if result == INJURED:
                 print("Ранил")
                 continue
