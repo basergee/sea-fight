@@ -4,6 +4,9 @@
 
 # Класс представляет результаты хода игрока: "Мимо", "Ранил", "Убил"
 #
+import random
+
+
 class MoveResult:
     pass
 
@@ -149,6 +152,9 @@ class HumanPlayer(Player):
 
 
 class AiPlayer(Player):
+    # Список возможных ходов. Из них будем случайно выбирать ход
+    _moves = [(i, j) for i in range(1, 7) for j in range(1, 7)]
+
     def __init__(self):
         # Сгенерировать положение кораблей случайным образом
         super().__init__()
@@ -159,10 +165,10 @@ class AiPlayer(Player):
     # случайно. Метод всегда возвращает допустимые координаты
     def make_move(self):
         print("Ходит компьютер")
-        row = 2
-        col = 3
-        print("Введено ", row, col)
-        return row, col
+        m = random.choice(self._moves)
+        print("Введено ", *m)
+        self._moves.remove(m)
+        return m
 
     def check_move(self, coord):
         return KILLED
