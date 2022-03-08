@@ -85,6 +85,9 @@ class HumanPlayer(Player):
         # Запросить ввод расположения кораблей с клавиатуры
         super().__init__()
 
+    # Возвращает координаты клетки, куда делается ход, которые
+    # запрашивает у пользователя. Выбрасывает исключение
+    # WrongMoveError, если ход повторяет ранее сделанный ход
     def make_move(self):
         print("Ходит игрок")
 
@@ -152,6 +155,8 @@ class AiPlayer(Player):
         self._own_board = [['o' for i in range(6)] for j in range(6)]
         self._enemy_board = [['x' for i in range(6)] for j in range(6)]
 
+    # Возвращает координаты клетки, куда делается ход. Ход делается
+    # случайно. Метод всегда возвращает допустимые координаты
     def make_move(self):
         print("Ходит компьютер")
         row = 2
