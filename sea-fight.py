@@ -22,6 +22,30 @@ class WrongMoveError(Exception):
     pass
 
 
+class Ship:
+    _coords = []
+
+    def __init__(self, coords: list):
+        if len(coords) > 3 or len(coords) < 1:
+            raise ValueError("Недопустимое количество палуб")
+        else:
+            self._coords = coords
+
+    @property
+    def number_of_decks(self):
+        return len(self._coords)
+
+    # Возвращает список клеток вокруг корабля, в которых нельзя
+    # размещать другие корабли
+    @property
+    def neighborhood(self):
+        # Пройти по списку координат
+        # К списку добавить еще элементы, координаты которых на 1
+        # больше и на 1 меньше уже имеющихся координат
+        # Удалить элементы за границей игрового поля
+        pass
+
+
 class Player:
     _own_board = []
     _enemy_board = []
