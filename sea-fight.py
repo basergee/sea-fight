@@ -39,11 +39,28 @@ class Ship:
     # размещать другие корабли
     @property
     def neighborhood(self):
-        # Пройти по списку координат
-        # К списку добавить еще элементы, координаты которых на 1
-        # больше и на 1 меньше уже имеющихся координат
-        # Удалить элементы за границей игрового поля
-        pass
+        # Пройти по списку координат корабля и выписать координаты всех
+        # окружающих корабль клеток
+        neib = set()
+        for row, col in self._coords:
+            neib.add((row - 1, col - 1))
+            neib.add((row - 1, col))
+            neib.add((row - 1, col + 1))
+            neib.add((row, col - 1))
+            neib.add((row, col))
+            neib.add((row, col + 1))
+            neib.add((row + 1, col - 1))
+            neib.add((row + 1, col))
+            neib.add((row + 1, col + 1))
+
+        # neib содержит окрестность каждой клетки корабля. Теперь надо убрать
+        # клетки за пределами игрового поля
+        neib = set(filter(
+            lambda cell: 0 <= cell[0] < 6 and 0 <= cell[1] < 6,
+            neib
+        ))
+
+        return neib
 
 
 class Player:
