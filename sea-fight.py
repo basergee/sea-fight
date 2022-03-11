@@ -193,30 +193,30 @@ class AiPlayer(Player):
         # генерацию
         while True:
             is_vert = True if random.randint(0, 10) > 5 else False
-            x, y = random.randint(0, 5), random.randint(0, 5)
+            row, col = random.randint(0, 5), random.randint(0, 5)
             if is_vert:
                 # Вертикальное расположение корабля
                 # Проверяем, что при таком расположении корабля входит в
-                # границы доски. Для этого проверяем координату y.
-                if x + 2 > 5:
+                # границы доски
+                if row + 2 > 5:
                     # Корабль не помещается. Повторить генерацию
                     continue
                 else:
-                    self._own_board[x][y] = '■'
-                    self._own_board[x + 1][y] = '■'
-                    self._own_board[x + 2][y] = '■'
+                    self._own_board[row][col] = '■'
+                    self._own_board[row + 1][col] = '■'
+                    self._own_board[row + 2][col] = '■'
                     break
             else:
-                # Вертикальное расположение корабля
+                # Горизонтальное расположение корабля
                 # Проверяем, что при таком расположении корабля входит в
-                # границы доски. Для этого проверяем координату y.
-                if y + 2 > 5:
+                # границы доски
+                if col + 2 > 5:
                     # Корабль не помещается. Повторить генерацию
                     continue
                 else:
-                    self._own_board[x][y] = '■'
-                    self._own_board[x][y + 1] = '■'
-                    self._own_board[x][y + 2] = '■'
+                    self._own_board[row][col] = '■'
+                    self._own_board[row][col + 1] = '■'
+                    self._own_board[row][col + 2] = '■'
                     break
 
         # Аналогично создадим 2 2-х палубных корабля. К 2-х палубным
@@ -226,28 +226,28 @@ class AiPlayer(Player):
         for i in range(2):
             while True:
                 is_vert = True if random.randint(0, 10) > 5 else False
-                x, y = random.randint(0, 5), random.randint(0, 5)
+                row, col = random.randint(0, 5), random.randint(0, 5)
                 if is_vert:
                     # Вертикальное расположение корабля
                     # Проверяем, что при таком расположении корабля входит в
-                    # границы доски. Для этого проверяем координату y.
-                    if x + 1 > 5:
+                    # границы доски
+                    if row + 1 > 5:
                         # Корабль не помещается. Повторить генерацию
                         continue
                     else:
-                        self._own_board[x][y] = '■'
-                        self._own_board[x + 1][y] = '■'
+                        self._own_board[row][col] = '■'
+                        self._own_board[row + 1][col] = '■'
                         break
                 else:
-                    # Вертикальное расположение корабля
+                    # Горизонтальное расположение корабля
                     # Проверяем, что при таком расположении корабля входит в
-                    # границы доски. Для этого проверяем координату y.
-                    if y + 1 > 5:
+                    # границы доски
+                    if col + 1 > 5:
                         # Корабль не помещается. Повторить генерацию
                         continue
                     else:
-                        self._own_board[x][y] = '■'
-                        self._own_board[x][y + 1] = '■'
+                        self._own_board[row][col] = '■'
+                        self._own_board[row][col + 1] = '■'
                         break
 
 
