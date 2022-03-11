@@ -35,6 +35,11 @@ class Ship:
     def number_of_decks(self):
         return len(self._coords)
 
+    # Список координат корабля
+    @property
+    def coords(self):
+        return self._coords
+
     # Возвращает список клеток вокруг корабля, в которых нельзя
     # размещать другие корабли
     @property
