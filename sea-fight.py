@@ -230,7 +230,7 @@ class AiPlayer(Player):
             # вертикального расположения корабля можно менять, меняя цифру
             # справа от знака неравенства '>'.
             coords = [(row, col), (row, col + 1), (row, col + 2)]
-            if random.randint(0, 10) > 5:
+            if random.randint(0, 9) > 5:
                 # Корабль расположим вертикально
                 coords = [(row, col), (row + 1, col), (row + 2, col)]
             self._ships.append(Ship(coords))
@@ -259,7 +259,7 @@ class AiPlayer(Player):
                     break
 
                 coords = [(row, col), (row, col + 1)]
-                if random.randint(0, 10) > 5:
+                if random.randint(0, 9) > 5:
                     # Корабль расположим вертикально
                     coords = [(row, col), (row + 1, col)]
                 self._ships.append(Ship(coords))
