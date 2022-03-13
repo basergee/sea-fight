@@ -239,18 +239,21 @@ class AiPlayer(Player):
             # кораблям предъявляется дополнительное требование. Все части
             # корабля должны находиться на расстоянии 1 клетка от 3-х палубного
             # и от других кораблей
-            # TODO: Добавить проверку всех частей корабля. Так как иногда
-            #  корабли генерируются неправильно. Вторая палуба корабля может
-            #  попадать в окрестность другого корабля
             for i in range(2):
                 row, col = random.randint(0, 4), random.randint(0, 4)
+                coords = [(row, col), (row, col + 1)]
+                if random.randint(0, 9) > 5:
+                    # Корабль расположим вертикально
+                    coords = [(row, col), (row + 1, col)]
 
-                # Проверяем, что корабль не попадает в окрестность другого корабля
+                # Проверяем, что ни одна часть корабля не попадает в
+                # окрестность другого корабля
                 reset = False
                 for s in self._ships:
-                    if (row, col) in s.neighborhood:
-                        reset = True
-                        break
+                    for deck in coords:
+                        if deck in s.neighborhood:
+                            reset = True
+                            break
 
                 # Какой-то корабль попал в окрестность другого корабля
                 # Повторить генерацию кораблей
@@ -258,10 +261,6 @@ class AiPlayer(Player):
                     self._ships.clear()
                     break
 
-                coords = [(row, col), (row, col + 1)]
-                if random.randint(0, 9) > 5:
-                    # Корабль расположим вертикально
-                    coords = [(row, col), (row + 1, col)]
                 self._ships.append(Ship(coords))
 
             # Создаем 4 однопалубных корабля. Ни один из них не должен попасть
