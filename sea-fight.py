@@ -68,6 +68,33 @@ class Ship:
         return neib
 
 
+class Board:
+    _ships = []
+    _board = [['o' for i in range(6)] for j in range(6)]
+
+    def add_ship(self, ship):
+        for row, col in ship.coords:
+            self._board[row][col] = '■'
+
+        self._ships.append(ship)
+
+    def set_cell(self, coord: (int, int), mr: MoveResult):
+        row, col = coord
+        if mr == MISSED:
+            self._board[row][col] = 'T'
+        elif mr == INJURED or mr == KILLED:
+            self._board[row][col] = 'X'
+
+    def check_cell(self, coord: (int, int)) -> MoveResult:
+        for ship in self._ships:
+            if coord in ship.coords:
+                self.set_cell(coord, INJURED)
+                return INJURED
+            else:
+                self.set_cell(coord, MISSED)
+                return MISSED
+
+
 class Player:
     _own_board = []
     _enemy_board = []
