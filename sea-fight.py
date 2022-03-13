@@ -200,6 +200,7 @@ class HumanPlayer(Player):
 class AiPlayer(Player):
     # Список возможных ходов. Из них будем случайно выбирать ход
     _moves = [(i, j) for i in range(1, 7) for j in range(1, 7)]
+    _ships = []
 
     def __init__(self):
         # Сгенерировать положение кораблей случайным образом
@@ -225,32 +226,89 @@ class AiPlayer(Player):
             is_vert = True if random.randint(0, 10) > 5 else False
             row, col = random.randint(0, 3), random.randint(0, 3)
             if is_vert:
-                self._own_board[row][col] = '■'
-                self._own_board[row + 1][col] = '■'
-                self._own_board[row + 2][col] = '■'
-                break
+                self._ships.append(
+                    Ship([
+                        (row, col),
+                        (row + 1, col),
+                        (row + 2, col)
+                    ])
+                )
             else:
-                self._own_board[row][col] = '■'
-                self._own_board[row][col + 1] = '■'
-                self._own_board[row][col + 2] = '■'
-                break
+                self._ships.append(
+                    Ship([
+                        (row, col),
+                        (row, col + 1),
+                        (row, col + 2)
+                    ])
+                )
 
-        # Аналогично создадим два 2-х палубных корабля. К 2-х палубным
-        # кораблям предъявляется дополнительное требование. Они должны
-        # находиться на расстоянии 1 клетка от 3-х палубного и друг от
-        # друга
-        for i in range(2):
-            while True:
+            # Аналогично создадим два 2-х палубных корабля. К 2-х палубным
+            # кораблям предъявляется дополнительное требование. Все части
+            # корабля должны находиться на расстоянии 1 клетка от 3-х палубного
+            # и от других кораблей
+            # TODO: Добавить проверку всех частей корабля. Так как иногда
+            #  корабли генерируются неправильно. Вторая палуба корабля может
+            #  попадать в окрестность другого корабля
+            for i in range(2):
                 is_vert = True if random.randint(0, 10) > 5 else False
                 row, col = random.randint(0, 4), random.randint(0, 4)
+
+                # Проверяем, что корабль не попадает в окрестность другого корабля
+                reset = False
+                for s in self._ships:
+                    if (row, col) in s.neighborhood:
+                        reset = True
+                        break
+
+                # Какой-то корабль попал в окрестность другого корабля
+                # Повторить генерацию кораблей
+                if reset:
+                    self._ships.clear()
+                    break
+
                 if is_vert:
-                    self._own_board[row][col] = '■'
-                    self._own_board[row + 1][col] = '■'
-                    break
+                    self._ships.append(
+                        Ship([
+                            (row, col),
+                            (row + 1, col),
+                        ])
+                    )
                 else:
-                    self._own_board[row][col] = '■'
-                    self._own_board[row][col + 1] = '■'
+                    self._ships.append(
+                        Ship([
+                            (row, col),
+                            (row, col + 1),
+                        ])
+                    )
+
+            # Создаем 4 однопалубных корабля. Ни один из них не должен попасть
+            # в окрестность других кораблей
+            for i in range(4):
+                row, col = random.randint(0, 5), random.randint(0, 5)
+
+                # Проверяем, что корабль не попадает в окрестность другого корабля
+                reset = False
+                for s in self._ships:
+                    if (row, col) in s.neighborhood:
+                        reset = True
+                        break
+
+                # Какой-то корабль попал в окрестность другого корабля
+                # Повторить генерацию кораблей
+                if reset:
+                    self._ships.clear()
                     break
+
+                self._ships.append(Ship([(row, col)]))
+
+            # Всего должно быть создано 7 кораблей
+            if len(self._ships) == 7:
+                break
+
+        # Корабли успешно созданы, добавляем их на игровое поле
+        for s in self._ships:
+            for row, col in s.coords:
+                self._own_board[row][col] = '■'
 
 
     # Возвращает координаты клетки, куда делается ход. Ход делается
