@@ -133,7 +133,7 @@ class Player:
 
     # Возвращает True, когда все корабли игрока уничтожены
     def is_looser(self) -> bool:
-        return False
+        return self.own_board.number_of_ships == 0
 
     # Возвращает список строк, представляющий собой поле игрока
     @property
@@ -227,10 +227,6 @@ class HumanPlayer(Player):
         prev_move_row = self._moves[-1][0] - 1
         prev_move_col = self._moves[-1][1] - 1
         self.enemy_board.set_cell((prev_move_row, prev_move_col), move_result)
-
-    # Возвращает True, когда все корабли игрока уничтожены
-    def is_looser(self) -> bool:
-        return False
 
     def print_boards(self):
         # Делаем отступ от любого предыдущего вывода
@@ -345,10 +341,6 @@ class AiPlayer(Player):
     def check_move(self, coord):
         row, col = coord
         return self._own_board.update_cell((row - 1, col - 1))
-
-    # Возвращает True, когда все корабли игрока уничтожены
-    def is_looser(self) -> bool:
-        return False
 
     def print_boards(self):
         # Делаем отступ от любого предыдущего вывода
