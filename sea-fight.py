@@ -235,7 +235,6 @@ class HumanPlayer(Player):
 class AiPlayer(Player):
     # Список возможных ходов. Из них будем случайно выбирать ход
     _moves = [(i, j) for i in range(1, 7) for j in range(1, 7)]
-    _ships = []
 
     def __init__(self):
         # Сгенерировать положение кораблей случайным образом
@@ -252,6 +251,7 @@ class AiPlayer(Player):
         # Если корабль вертикальный 2-х палубный, то координата 0 <= row <= 4
         # Если корабль горизонтальный 2-х палубный, то координата 0 <= col <= 4
 
+        ships = []
         while True:
             # Создадим 3-х палубный корабль. Он задается координатами одного
             # угла и ориентацией. В случае горизонтального расположения
@@ -268,7 +268,7 @@ class AiPlayer(Player):
             if random.randint(0, 9) > 5:
                 # Корабль расположим вертикально
                 coords = [(row, col), (row + 1, col), (row + 2, col)]
-            self._ships.append(Ship(coords))
+            ships.append(Ship(coords))
 
             # Аналогично создадим два 2-х палубных корабля. К 2-х палубным
             # кораблям предъявляется дополнительное требование. Все части
@@ -284,7 +284,7 @@ class AiPlayer(Player):
                 # Проверяем, что ни одна часть корабля не попадает в
                 # окрестность другого корабля
                 reset = False
-                for s in self._ships:
+                for s in ships:
                     for deck in coords:
                         if deck in s.neighborhood:
                             reset = True
@@ -293,10 +293,10 @@ class AiPlayer(Player):
                 # Какой-то корабль попал в окрестность другого корабля
                 # Повторить генерацию кораблей
                 if reset:
-                    self._ships.clear()
+                    ships.clear()
                     break
 
-                self._ships.append(Ship(coords))
+                ships.append(Ship(coords))
 
             # Создаем 4 однопалубных корабля. Ни один из них не должен попасть
             # в окрестность других кораблей
@@ -305,7 +305,7 @@ class AiPlayer(Player):
 
                 # Проверяем, что корабль не попадает в окрестность другого корабля
                 reset = False
-                for s in self._ships:
+                for s in ships:
                     if (row, col) in s.neighborhood:
                         reset = True
                         break
@@ -313,17 +313,17 @@ class AiPlayer(Player):
                 # Какой-то корабль попал в окрестность другого корабля
                 # Повторить генерацию кораблей
                 if reset:
-                    self._ships.clear()
+                    ships.clear()
                     break
 
-                self._ships.append(Ship([(row, col)]))
+                ships.append(Ship([(row, col)]))
 
             # Всего должно быть создано 7 кораблей
-            if len(self._ships) == 7:
+            if len(ships) == 7:
                 break
 
         # Корабли успешно созданы, добавляем их на игровое поле
-        for s in self._ships:
+        for s in ships:
             self._own_board.add_ship(s)
 
     # Возвращает координаты клетки, куда делается ход. Ход делается
