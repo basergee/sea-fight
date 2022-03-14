@@ -325,7 +325,6 @@ class AiPlayer(Player):
     def make_move(self):
         print("Ходит компьютер")
         m = self._moves[-1]
-        print("Ходы компа: ", self._moves)
         print("Введено ", *m)
         return m
 
