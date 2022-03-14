@@ -234,8 +234,10 @@ class AiPlayer(Player):
         super().__init__()
         self._own_board = Board()
         self._enemy_board = Board()
+
         # Список возможных ходов. Из них будем случайно выбирать ход
         self._moves = [(i, j) for i in range(1, 7) for j in range(1, 7)]
+        random.shuffle(self._moves)
 
         # Создаем корабли. Один 3-х палубный, два 2-х палубных, четыре
         # однопалубных. Повторяем процедуру заново, если хотя бы один корабль
@@ -325,14 +327,22 @@ class AiPlayer(Player):
     # случайно. Метод всегда возвращает допустимые координаты
     def make_move(self):
         print("Ходит компьютер")
-        m = random.choice(self._moves)
+        m = self._moves[-1]
+        print("Ходы компа: ", self._moves)
         print("Введено ", *m)
-        self._moves.remove(m)
         return m
 
     def check_move(self, coord):
         row, col = coord
         return self._own_board.update_cell((row - 1, col - 1))
+
+    # Обновляет игровые поля в соответствии с результатом хода
+    def update_boards(self, move_result: MoveResult):
+        # Берем координаты последнего хода и обновляем доску в соответствии с ними
+        prev_move_row = self._moves[-1][0] - 1
+        prev_move_col = self._moves[-1][1] - 1
+        self.enemy_board.set_cell((prev_move_row, prev_move_col), move_result)
+        self._moves.pop(-1)
 
     def print_boards(self):
         # Делаем отступ от любого предыдущего вывода
