@@ -85,7 +85,10 @@ class Board:
         elif mr == INJURED or mr == KILLED:
             self._board[row][col] = 'X'
 
-    def check_cell(self, coord: (int, int)) -> MoveResult:
+    # Обновляет состояние клетки, заданой координатами (строка, столбец).
+    # Считается, что в эту клетку произведен выстрел.
+    # Возвращает результат: мимо, ранил, убил
+    def update_cell(self, coord: (int, int)) -> MoveResult:
         for ship in self._ships:
             if coord in ship.coords:
                 self.set_cell(coord, INJURED)
