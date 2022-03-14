@@ -373,8 +373,7 @@ class SeaFight:
         ai = AiPlayer()
         player1 = human
         player2 = ai
-        # while True:
-        for i in range(10):
+        while True:
             ai.print_boards()
             result = player2.check_move(player1.make_move())
             player1.update_boards(result)
