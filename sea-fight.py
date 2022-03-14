@@ -72,6 +72,10 @@ class Board:
     _ships = []
     _board = [['o' for i in range(6)] for j in range(6)]
 
+    @property
+    def as_list(self):
+        return self._board
+
     def add_ship(self, ship):
         for row, col in ship.coords:
             self._board[row][col] = '■'
