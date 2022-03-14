@@ -219,10 +219,10 @@ class HumanPlayer(Player):
 
     # Обновляет игровые поля в соответствии с результатом хода
     def update_boards(self, move_result: MoveResult):
-        if move_result == MISSED:
-            self._enemy_board[(self._moves[-1])[0]-1][(self._moves[-1])[1]-1] = 'T'
-        elif move_result == INJURED or move_result == KILLED:
-            self._enemy_board[(self._moves[-1])[0]-1][(self._moves[-1])[1]-1] = 'X'
+        # Берем координаты последнего хода и обновляем доску в соответствии с ними
+        prev_move_row = self._moves[-1][0] - 1
+        prev_move_col = self._moves[-1][1] - 1
+        self.enemy_board.set_cell((prev_move_row, prev_move_col), move_result)
 
     # Возвращает True, когда все корабли игрока уничтожены
     def is_looser(self) -> bool:
