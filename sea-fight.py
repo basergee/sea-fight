@@ -75,6 +75,10 @@ class Board:
         self._board = [['o' for i in range(6)] for j in range(6)]
 
     @property
+    def number_of_ships(self):
+        return len(self._ships)
+
+    @property
     def as_list(self):
         return self._board
 
