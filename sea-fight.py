@@ -20,9 +20,8 @@ class WrongMoveError(Exception):
 
 
 class Ship:
-    _coords = []
-
     def __init__(self, coords: list):
+        self._coords = []
         if len(coords) > 3 or len(coords) < 1:
             raise ValueError("Недопустимое количество палуб")
         else:
@@ -107,9 +106,6 @@ class Board:
 
 
 class Player:
-    _own_board = []
-    _enemy_board = []
-
     def __init__(self):
         self._own_board = Board()
         self._enemy_board = Board()
@@ -166,11 +162,10 @@ class Player:
 
 
 class HumanPlayer(Player):
-    _moves = []
-
     def __init__(self):
         # Запросить ввод расположения кораблей с клавиатуры
         super().__init__()
+        self._moves = []
 
     # Возвращает координаты клетки, куда делается ход, которые
     # запрашивает у пользователя. Выбрасывает исключение
@@ -233,14 +228,14 @@ class HumanPlayer(Player):
 
 
 class AiPlayer(Player):
-    # Список возможных ходов. Из них будем случайно выбирать ход
-    _moves = [(i, j) for i in range(1, 7) for j in range(1, 7)]
 
     def __init__(self):
         # Сгенерировать положение кораблей случайным образом
         super().__init__()
         self._own_board = Board()
         self._enemy_board = Board()
+        # Список возможных ходов. Из них будем случайно выбирать ход
+        self._moves = [(i, j) for i in range(1, 7) for j in range(1, 7)]
 
         # Создаем корабли. Один 3-х палубный, два 2-х палубных, четыре
         # однопалубных. Повторяем процедуру заново, если хотя бы один корабль
