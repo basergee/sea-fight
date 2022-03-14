@@ -216,7 +216,8 @@ class HumanPlayer(Player):
             raise WrongMoveError("Вы уже стреляли в эту клетку!")
 
     def check_move(self, coord):
-        return MISSED
+        row, col = coord
+        return self._own_board.update_cell((row - 1, col - 1))
 
     # Обновляет игровые поля в соответствии с результатом хода
     def update_boards(self, move_result: MoveResult):
