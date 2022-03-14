@@ -111,8 +111,8 @@ class Player:
     _enemy_board = []
 
     def __init__(self):
-        self._own_board = [['o' for i in range(6)] for j in range(6)]
-        self._enemy_board = [['o' for i in range(6)] for j in range(6)]
+        self._own_board = Board()
+        self._enemy_board = Board()
 
     # Ход игрока. Метод возвращает координаты клетки, в которую игрок
     # делает выстрел (ход)
@@ -157,10 +157,10 @@ class Player:
         for i in range(1, 7):
             print(
                 str(i) + " | "
-                + " | ".join(list(map(str, self.own_board[i - 1])))
+                + " | ".join(list(map(str, self.own_board.as_list[i - 1])))
                 + "\t\t"
                 + str(i) + " | "
-                + " | ".join(list(map(str, self.enemy_board[i - 1])))
+                + " | ".join(list(map(str, self.enemy_board.as_list[i - 1])))
             )
         print()
 
@@ -243,8 +243,8 @@ class AiPlayer(Player):
     def __init__(self):
         # Сгенерировать положение кораблей случайным образом
         super().__init__()
-        self._own_board = [['o' for i in range(6)] for j in range(6)]
-        self._enemy_board = [['x' for i in range(6)] for j in range(6)]
+        self._own_board = Board()
+        self._enemy_board = Board()
 
         # Создаем корабли. Один 3-х палубный, два 2-х палубных, четыре
         # однопалубных. Повторяем процедуру заново, если хотя бы один корабль
@@ -327,8 +327,7 @@ class AiPlayer(Player):
 
         # Корабли успешно созданы, добавляем их на игровое поле
         for s in self._ships:
-            for row, col in s.coords:
-                self._own_board[row][col] = '■'
+            self._own_board.add_ship(s)
 
     # Возвращает координаты клетки, куда делается ход. Ход делается
     # случайно. Метод всегда возвращает допустимые координаты
