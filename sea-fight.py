@@ -70,7 +70,9 @@ class Ship:
 
 class Board:
     _ships = []
-    _board = [['o' for i in range(6)] for j in range(6)]
+
+    def __init__(self):
+        self._board = [['o' for i in range(6)] for j in range(6)]
 
     @property
     def as_list(self):
