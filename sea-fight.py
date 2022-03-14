@@ -339,7 +339,8 @@ class AiPlayer(Player):
         return m
 
     def check_move(self, coord):
-        return KILLED
+        row, col = coord
+        return self._own_board.update_cell((row - 1, col - 1))
 
     # Возвращает True, когда все корабли игрока уничтожены
     def is_looser(self) -> bool:
