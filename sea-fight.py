@@ -101,9 +101,8 @@ class Board:
                 if all([self._board[row][col] == 'X' for row, col in ship.coords]):
                     return KILLED
                 return INJURED
-            else:
-                self.set_cell(coord, MISSED)
-                return MISSED
+        self.set_cell(coord, MISSED)
+        return MISSED
 
 
 class Player:
