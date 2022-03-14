@@ -117,7 +117,8 @@ class Player:
 
     # Проверяет сделанный ход. Возвращает статус: мимо, ранил, убил
     def check_move(self, coord):
-        pass
+        row, col = coord
+        return self._own_board.update_cell((row - 1, col - 1))
 
     # Обновляет игровые поля в соответствии с результатом хода
     def update_boards(self, move_result: MoveResult):
@@ -208,10 +209,6 @@ class HumanPlayer(Player):
             return row, col
         else:
             raise WrongMoveError("Вы уже стреляли в эту клетку!")
-
-    def check_move(self, coord):
-        row, col = coord
-        return self._own_board.update_cell((row - 1, col - 1))
 
     # Обновляет игровые поля в соответствии с результатом хода
     def update_boards(self, move_result: MoveResult):
@@ -331,10 +328,6 @@ class AiPlayer(Player):
         print("Ходы компа: ", self._moves)
         print("Введено ", *m)
         return m
-
-    def check_move(self, coord):
-        row, col = coord
-        return self._own_board.update_cell((row - 1, col - 1))
 
     # Обновляет игровые поля в соответствии с результатом хода
     def update_boards(self, move_result: MoveResult):
