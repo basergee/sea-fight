@@ -84,11 +84,11 @@ class Board:
 
         self._ships.append(ship)
 
-    def set_cell(self, coord: (int, int), mr: MoveResult):
+    def set_cell(self, coord: (int, int), move_result: MoveResult):
         row, col = coord
-        if mr == MISSED:
+        if move_result == MISSED:
             self._board[row][col] = 'T'
-        elif mr == INJURED or mr == KILLED:
+        elif move_result == INJURED or move_result == KILLED:
             self._board[row][col] = 'X'
 
     # Обновляет состояние клетки, заданой координатами (строка, столбец).
