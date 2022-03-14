@@ -89,6 +89,8 @@ class Board:
         for ship in self._ships:
             if coord in ship.coords:
                 self.set_cell(coord, INJURED)
+                if all([self._board[row][col] == 'X' for row, col in ship.coords]):
+                    return KILLED
                 return INJURED
             else:
                 self.set_cell(coord, MISSED)
