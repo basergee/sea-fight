@@ -374,6 +374,7 @@ class SeaFight:
         player1 = human
         player2 = ai
         while True:
+            human.print_boards()
             ai.print_boards()
             result = player2.check_move(player1.make_move())
             player1.update_boards(result)
