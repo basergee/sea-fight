@@ -110,132 +110,7 @@ class Player:
         self._own_board = Board()
         self._enemy_board = Board()
 
-    # Ход игрока. Метод возвращает координаты клетки, в которую игрок
-    # делает выстрел (ход)
-    def make_move(self):
-        pass
-
-    # Проверяет сделанный ход. Возвращает статус: мимо, ранил, убил
-    def check_move(self, coord):
-        row, col = coord
-        return self._own_board.update_cell((row - 1, col - 1))
-
-    # Обновляет игровые поля в соответствии с результатом хода
-    def update_boards(self, move_result: MoveResult):
-        pass
-
-    # Возвращает True, когда все корабли игрока уничтожены
-    def is_looser(self) -> bool:
-        return self.own_board.number_of_ships == 0
-
-    # Возвращает список строк, представляющий собой поле игрока
-    @property
-    def own_board(self):
-        return self._own_board
-
-    # Возвращает список строк, представляющий собой поле соперника
-    @property
-    def enemy_board(self):
-        return self._enemy_board
-
-    def print_boards(self):
-        # Делаем отступ от любого предыдущего вывода
-        print()
-
-        # Выводим горизонтальную ось координат на две доски
-        print(
-            "  | " + " | ".join(map(str, range(1, 7)))
-            + "\t\t"
-            + "  | " + " | ".join(map(str, range(1, 7)))
-        )
-
-        # К каждой строке клеток добавляем первым символом цифру оси
-        # координат
-        for i in range(1, 7):
-            print(
-                str(i) + " | "
-                + " | ".join(list(map(str, self.own_board.as_list[i - 1])))
-                + "\t\t"
-                + str(i) + " | "
-                + " | ".join(list(map(str, self.enemy_board.as_list[i - 1])))
-            )
-        print()
-
-
-class HumanPlayer(Player):
-    def __init__(self):
-        # Запросить ввод расположения кораблей с клавиатуры
-        super().__init__()
-        self._moves = []
-
-    # Возвращает координаты клетки, куда делается ход, которые
-    # запрашивает у пользователя. Выбрасывает исключение
-    # WrongMoveError, если ход повторяет ранее сделанный ход
-    def make_move(self):
-        print("Ходит игрок")
-
-        row = None  # Номер строки
-        col = None  # Номер столбца
-
-        while True:
-            try:
-                row = int(input("Введите номер строки: "))
-            except ValueError:
-                print("Введите ЧИСЛО!")
-                continue
-
-            if 1 <= row <= 6:
-                break
-            else:
-                print("За пределами игрового поля")
-                print("Повторите ввод")
-
-        while True:
-            try:
-                col = int(input("Введите номер столбца: "))
-            except ValueError:
-                print("Введите ЧИСЛО!")
-                continue
-
-            if 1 <= col <= 6:
-                break
-            else:
-                print("За пределами игрового поля")
-                print("Повторите ввод")
-
-        print("Введено ", row, col)
-        if (row, col) not in self._moves:
-            self._moves.append((row, col))
-            return row, col
-        else:
-            raise WrongMoveError("Вы уже стреляли в эту клетку!")
-
-    # Обновляет игровые поля в соответствии с результатом хода
-    def update_boards(self, move_result: MoveResult):
-        # Берем координаты последнего хода и обновляем доску в соответствии с ними
-        prev_move_row = self._moves[-1][0] - 1
-        prev_move_col = self._moves[-1][1] - 1
-        self.enemy_board.set_cell((prev_move_row, prev_move_col), move_result)
-
-    def print_boards(self):
-        # Делаем отступ от любого предыдущего вывода
-        print()
-        print("\tИгрок (человек) \t\t\t\t\tПротивник")
-        super().print_boards()
-
-
-class AiPlayer(Player):
-
-    def __init__(self):
-        # Сгенерировать положение кораблей случайным образом
-        super().__init__()
-        self._own_board = Board()
-        self._enemy_board = Board()
-
-        # Список возможных ходов. Из них будем случайно выбирать ход
-        self._moves = [(i, j) for i in range(1, 7) for j in range(1, 7)]
-        random.shuffle(self._moves)
-
+    def fill_board(self):
         # Создаем корабли. Один 3-х палубный, два 2-х палубных, четыре
         # однопалубных. Повторяем процедуру заново, если хотя бы один корабль
         # попал в окрестность другого корабля
@@ -319,6 +194,131 @@ class AiPlayer(Player):
         # Корабли успешно созданы, добавляем их на игровое поле
         for s in ships:
             self._own_board.add_ship(s)
+
+    # Ход игрока. Метод возвращает координаты клетки, в которую игрок
+    # делает выстрел (ход)
+    def make_move(self):
+        pass
+
+    # Проверяет сделанный ход. Возвращает статус: мимо, ранил, убил
+    def check_move(self, coord):
+        row, col = coord
+        return self._own_board.update_cell((row - 1, col - 1))
+
+    # Обновляет игровые поля в соответствии с результатом хода
+    def update_boards(self, move_result: MoveResult):
+        pass
+
+    # Возвращает True, когда все корабли игрока уничтожены
+    def is_looser(self) -> bool:
+        return self.own_board.number_of_ships == 0
+
+    # Возвращает список строк, представляющий собой поле игрока
+    @property
+    def own_board(self):
+        return self._own_board
+
+    # Возвращает список строк, представляющий собой поле соперника
+    @property
+    def enemy_board(self):
+        return self._enemy_board
+
+    def print_boards(self):
+        # Делаем отступ от любого предыдущего вывода
+        print()
+
+        # Выводим горизонтальную ось координат на две доски
+        print(
+            "  | " + " | ".join(map(str, range(1, 7)))
+            + "\t\t"
+            + "  | " + " | ".join(map(str, range(1, 7)))
+        )
+
+        # К каждой строке клеток добавляем первым символом цифру оси
+        # координат
+        for i in range(1, 7):
+            print(
+                str(i) + " | "
+                + " | ".join(list(map(str, self.own_board.as_list[i - 1])))
+                + "\t\t"
+                + str(i) + " | "
+                + " | ".join(list(map(str, self.enemy_board.as_list[i - 1])))
+            )
+        print()
+
+
+class HumanPlayer(Player):
+    def __init__(self):
+        # Запросить ввод расположения кораблей с клавиатуры
+        super().__init__()
+        self.fill_board()
+        self._moves = []
+
+    # Возвращает координаты клетки, куда делается ход, которые
+    # запрашивает у пользователя. Выбрасывает исключение
+    # WrongMoveError, если ход повторяет ранее сделанный ход
+    def make_move(self):
+        print("Ходит игрок")
+
+        row = None  # Номер строки
+        col = None  # Номер столбца
+
+        while True:
+            try:
+                row = int(input("Введите номер строки: "))
+            except ValueError:
+                print("Введите ЧИСЛО!")
+                continue
+
+            if 1 <= row <= 6:
+                break
+            else:
+                print("За пределами игрового поля")
+                print("Повторите ввод")
+
+        while True:
+            try:
+                col = int(input("Введите номер столбца: "))
+            except ValueError:
+                print("Введите ЧИСЛО!")
+                continue
+
+            if 1 <= col <= 6:
+                break
+            else:
+                print("За пределами игрового поля")
+                print("Повторите ввод")
+
+        print("Введено ", row, col)
+        if (row, col) not in self._moves:
+            self._moves.append((row, col))
+            return row, col
+        else:
+            raise WrongMoveError("Вы уже стреляли в эту клетку!")
+
+    # Обновляет игровые поля в соответствии с результатом хода
+    def update_boards(self, move_result: MoveResult):
+        # Берем координаты последнего хода и обновляем доску в соответствии с ними
+        prev_move_row = self._moves[-1][0] - 1
+        prev_move_col = self._moves[-1][1] - 1
+        self.enemy_board.set_cell((prev_move_row, prev_move_col), move_result)
+
+    def print_boards(self):
+        # Делаем отступ от любого предыдущего вывода
+        print()
+        print("\tИгрок (человек) \t\t\t\t\tПротивник")
+        super().print_boards()
+
+
+class AiPlayer(Player):
+    def __init__(self):
+        # Сгенерировать положение кораблей случайным образом
+        super().__init__()
+        self.fill_board()
+
+        # Список возможных ходов. Из них будем случайно выбирать ход
+        self._moves = [(i, j) for i in range(1, 7) for j in range(1, 7)]
+        random.shuffle(self._moves)
 
     # Возвращает координаты клетки, куда делается ход. Ход делается
     # случайно. Метод всегда возвращает допустимые координаты
