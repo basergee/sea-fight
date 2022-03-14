@@ -66,10 +66,9 @@ class Ship:
 
 
 class Board:
-    _ships = []
-
     def __init__(self):
         self._board = [['o' for i in range(6)] for j in range(6)]
+        self._ships = []
 
     @property
     def number_of_ships(self):
