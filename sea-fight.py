@@ -367,7 +367,12 @@ class SeaFight:
         while True:
             human.print_boards()
             ai.print_boards()
-            result = player2.check_move(player1.make_move())
+            try:
+                result = player2.check_move(player1.make_move())
+            except WrongMoveError:
+                print("Нельзя стрелять в одну клетку дважды!")
+                print("Сделайте другой ход")
+                continue
             player1.update_boards(result)
             print("Ответ противника: ", end="")
             if result == INJURED:
