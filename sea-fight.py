@@ -362,8 +362,12 @@ class SeaFight:
     def play(self):
         human = HumanPlayer()
         ai = AiPlayer()
-        player1 = human
-        player2 = ai
+
+        # Первый ход делает игрок player1. Случайным образом определяем, кто
+        # это: человек или компьютер. Вероятность того, что это будет человек,
+        # можно менять, меняя цифру справа от знака неравенства
+        player1 = human if random.randint(0, 9) > 5 else ai
+        player2 = ai if player1 is human else human
         while True:
             human.print_boards()
             ai.print_boards()
