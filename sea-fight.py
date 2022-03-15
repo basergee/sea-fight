@@ -418,8 +418,18 @@ class SeaFight:
 
 
 if __name__ == "__main__":
-    game = SeaFight()
-    game.print_greeting()
-    game.print_help()
-    game.ask_show_ai_board()
-    game.play()
+    new_game = True
+    while new_game:
+        game = SeaFight()
+        game.print_greeting()
+        game.print_help()
+        game.ask_show_ai_board()
+        game.play()
+        while True:
+            s = input("Хотите начать новую игру [y (Да) / n (Нет)]?: ")
+            if s == 'y':
+                break
+            elif s == 'n':
+                new_game = False
+                break
+            print("Введите 'y' или 'n'")
