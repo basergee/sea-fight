@@ -344,6 +344,9 @@ class AiPlayer(Player):
 
 
 class SeaFight:
+    def __init__(self):
+        self._show_ai_board = True
+
     def print_greeting(self):
         #    ("123456789_123456789_123456789_123456789_123456789_123456789_12")
         print("+------------------------------------------------------------+")
@@ -361,6 +364,18 @@ class SeaFight:
         print("| игровое поле победителя.                                   |")
         print("+------------------------------------------------------------+")
 
+    def ask_show_ai_board(self):
+        while True:
+            s = input("Показывать игровое поле компьютера "
+                      "[y (Да) / n (Нет)]?: ")
+            if s == 'y':
+                self._show_ai_board = True
+                break
+            elif s == 'n':
+                self._show_ai_board = False
+                break
+            print("Введите 'y' или 'n'")
+
     def play(self):
         human = HumanPlayer()
         ai = AiPlayer()
@@ -372,7 +387,8 @@ class SeaFight:
         player2 = ai if player1 is human else human
         while True:
             human.print_boards()
-            ai.print_boards()
+            if self._show_ai_board:
+                ai.print_boards()
             try:
                 result = player2.check_move(player1.make_move())
             except WrongMoveError:
@@ -405,4 +421,5 @@ if __name__ == "__main__":
     game = SeaFight()
     game.print_greeting()
     game.print_help()
+    game.ask_show_ai_board()
     game.play()
