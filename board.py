@@ -38,6 +38,7 @@ class Board:
 
         self._ships.append(ship)
 
+    # Ставит символ в клетку, соответствующий результатам хода
     def set_cell(self, coord: (int, int), move_result: MoveResult):
         row, col = coord
         if move_result == MISSED:
@@ -45,7 +46,7 @@ class Board:
         elif move_result == INJURED or move_result == KILLED:
             self._board[row][col] = 'X'
 
-    # Обновляет состояние клетки, заданой координатами (строка, столбец).
+    # Обновляет состояние клетки, заданной координатами (строка, столбец).
     # Считается, что в эту клетку произведен выстрел.
     # Возвращает результат: мимо, ранил, убил
     def update_cell(self, coord: (int, int)) -> MoveResult:

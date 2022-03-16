@@ -11,8 +11,9 @@ from board import MoveResult
 
 class AiPlayer(Player):
     def __init__(self):
-        # Сгенерировать положение кораблей случайным образом
         super().__init__()
+
+        # Сгенерировать положение кораблей случайным образом
         self.fill_board()
 
         # Список возможных ходов. Из них будем случайно выбирать ход
@@ -29,10 +30,14 @@ class AiPlayer(Player):
 
     # Обновляет игровые поля в соответствии с результатом хода
     def update_boards(self, move_result: MoveResult):
-        # Берем координаты последнего хода и обновляем доску в соответствии с ними
+        # Берем координаты последнего хода и обновляем доску в соответствии с
+        # ними. Уменьшаем координаты на 1 в связи с тем, что внутренняя
+        # индексация координат начинается с 0
         prev_move_row = self._moves[-1][0] - 1
         prev_move_col = self._moves[-1][1] - 1
         self.enemy_board.set_cell((prev_move_row, prev_move_col), move_result)
+
+        # Удаляем последний ход из списка ходов, чтобы никогда его не повторить
         self._moves.pop(-1)
 
     def print_boards(self):
